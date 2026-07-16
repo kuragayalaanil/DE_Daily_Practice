@@ -1,0 +1,143 @@
+SQL Practise
+--------------
+
+_____________________________SELECT STATEMET__________________
+
+CREATE DATABASE sql_practice;
+
+SHOW DATABASES;
+
+USE sql_practice;
+
+CREATE TABLE customers(
+customer_id INT PRIMARY KEY,
+customer_name VARCHAR(50),
+city VARCHAR(50),
+age INT,
+salary DECIMAL(10,2));
+
+SHOW TABLES;
+
+CREATE TABLE orders(
+order_id INT PRIMARY KEY,
+customer_id INT,
+order_date DATE,
+amount DECIMAL(10,2),
+status VARCHAR(20),
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id));
+
+SHOW TABLES;
+
+INSERT INTO customers VALUES
+(1, 'Ramesh', 'Ahmedabad', 32, 2000.00),
+(2, 'Khilan', 'Delhi', 25, 1500.00),
+(3, 'Kaushik', 'Kota', 23, 2000.00),
+(4, 'Chaitali', 'Mumbai', 25, 6500.00),
+(5, 'Hardik', 'Bhopal', 27, 8500.00),
+(6, 'Komal', 'Pune', 22, 4500.00),
+(7, 'Muffy', 'Indore', 24, 10000.00);
+
+SELECT * FROM customers;
+
+INSERT INTO orders VALUES
+(101, 3, '2026-01-10', 3000.00, 'PAID'),
+(102, 3, '2026-01-15', 1500.00, 'PENDING'),
+(103, 2, '2026-02-20', 1560.00, 'PAID'),
+(104, 4, '2026-03-05', 2060.00, 'CANCELLED'),
+(105, 5, '2026-03-12', 8000.00, 'PAID'),
+(106, 6, '2026-04-01', 2500.00, 'PENDING');
+
+__________________________________________________________________________
+
+SHOW DATABASES; 
+
+USE sql_practice;
+
+SHOW TABLES;
+
+SELECT * FROM customers;
+
+SELECT * FROM orders;
+
+SELECT customer_name, city FROM customers;
+
+SELECT customer_id, customer_name, salary FROM customers;
+
+SELECT order_id, amount, status FROM orders;
+
+-- WHERE Practice
+
+SELECT * FROM customers
+WHERE city='DELHI';
+
+SELECT * FROM customers
+WHERE age>25;
+
+SELECT * FROM customers 
+WHERE salary > 5000;
+
+SELECT * FROM orders 
+WHERE amount > 3000;
+
+SELECT * FROM orders
+WHERE status = 'PAID';
+
+SELECT * FROM customers
+WHERE age < 24;
+
+-- AND
+
+SELECT * FROM customers
+WHERE age > 24 AND salary > 5000; 
+
+SELECT * FROM customers
+WHERE city = 'Mumbai' AND salary > 5000;
+
+SELECT * FROM orders
+WHERE amount > 5000 AND status = 'PAID';
+
+SELECT * FROM customers
+WHERE city = 'Pune' AND age > 20;
+
+SELECT * FROM customers
+WHERE age BETWEEN 22 AND 30 AND city = 'Bhopal';
+
+-- OR
+
+SELECT * FROM customers
+WHERE city = 'Delhi' OR city = 'Mumbai'; 
+
+SELECT * FROM customers
+WHERE salary < 2000 OR salary > 8000;
+
+SELECT * FROM orders
+WHERE status = 'PAID' OR status = 'PENDING';
+
+SELECT * FROM customers
+WHERE age = 22 OR age = 24;
+
+SELECT * FROM customers
+WHERE city = 'Ahmedabad' OR city = 'Indore';
+
+-- Like
+
+SELECT * FROM customers
+WHERE customer_name LIKE "K%";
+
+SELECT * FROM customers
+WHERE customer_name LIKE "%I";
+
+SELECT * FROM customers
+WHERE customer_name LIKE "%a%";
+
+SELECT * FROM customers
+WHERE city LIKE "P%";
+
+SELECT * FROM customers
+WHERE city LIKE "%i";
+
+SELECT * FROM customers
+WHERE customer_name LIKE "_____";
+
+SELECT * FROM customers
+WHERE customer_name LIKE "_o%";
