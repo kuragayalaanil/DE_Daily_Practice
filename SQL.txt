@@ -141,3 +141,92 @@ WHERE customer_name LIKE "_____";
 
 SELECT * FROM customers
 WHERE customer_name LIKE "_o%";
+
+________________________________UDFs _______________________________________
+
+CREATE DATABASE company_db;
+
+USE company_db;
+
+CREATE TABLE 
+	employees (employee_id INT PRIMARY KEY, employee_name VARCHAR(100) NOT NULL, department VARCHAR(50), salary DECIMAL(10,2), bonus DECIMAL(10,2), joining_date DATE);
+
+SHOW TABLES;
+
+SELECT * FROM employees;
+
+INSERT INTO employees VALUES
+(101,'Arun','IT',80000.00,10000.00,'2021-01-15'),
+(102,'Priya','HR',55000.00,5000.00,'2022-03-10'),
+(103,'Rahul','IT',95000.00,15000.00,'2019-07-01'),
+(104,'Neha','Finance',70000.00,NULL,'2020-09-20'),
+(105,'David','Sales',45000.00,3000.00,'2023-06-12'),
+(106,'Sneha','IT',NULL,NULL,'2024-02-01');
+
+SELECT * FROM employees;
+
+DELIMITER //
+CREATE FUNCTION calculate_total_compensation(
+	p_salary DECIMAL(10,2),
+    p_bonus DECIMAL(10,2)
+)
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+NO SQL
+BEGIN 
+	RETURN COALESCE(p_salary, 0) + COALESCE(p_bonus,0);
+END //
+DELIMITER ;
+
+SELECT 
+	employee_name, salary, bonus, calculate_total_compensation(salary, bonus) AS total_compensation
+FROM
+	employees;
+    
+-- ASSIGNMENT 1 
+DELIMITER //
+CREATE FUNCTION categorize_salary(
+	p_salary DECIMAL(10,2)
+)
+RETURNS VARCHAR(30)
+DETERMINISTIC
+NO SQL
+BEGIN 
+	RETURN 
+    CASE
+		WHEN p_salary IS NULL THEN 'Salary is Null'
+        WHEN p_salary >= 90000 THEN 'Highest Salary'
+		WHEN p_salary >= 60000 THEN 'Medium Salary'
+        ELSE 'LOW SALARY'
+	END;
+END //
+DELIMITER ;
+
+SELECT
+    *,
+    categorize_salary(salary) AS Salary_Category
+FROM employees;
+
+-- ASSIGNMENT - 2
+DELIMITER //
+CREATE FUNCTION categorize_bonus(
+	p_bonus DECIMAL(10,2)
+)
+RETURNS VARCHAR(20)
+DETERMINISTIC
+BEGIN
+RETURN
+    CASE
+        WHEN p_bonus IS NULL THEN 'No Bonus'
+        WHEN p_bonus >= 15000 THEN 'Excellent Bonus'
+        WHEN p_bonus >= 10000 THEN 'High Bonus'
+        WHEN p_bonus >= 5000 THEN 'Medium Bonus'
+        ELSE 'Low Bonus'
+END;
+END //
+DELIMITER ;
+
+SELECT
+	*, categorize_bonus(salary)
+FROM 
+	employees;
