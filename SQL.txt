@@ -230,3 +230,284 @@ SELECT
 	*, categorize_bonus(salary)
 FROM 
 	employees;
+
+// 21-07-2026
+
+SHOW DATABASES; 
+
+USE sql_practice;
+
+SHOW TABLES;
+
+SELECT 
+	*
+FROM
+	customers;
+
+SELECT 
+	*
+FROM
+	orders;
+    
+SELECT 
+	customer_name 
+FROM 
+	customers;
+
+SELECT
+	customer_name,
+    city
+FROM
+	customers;
+
+SELECT 
+	*
+FROM
+	customers
+WHERE city='Delhi';
+
+SELECT 
+	*
+FROM
+	customers
+WHERE salary > 5000;
+
+SELECT
+	*
+FROM
+	customers
+WHERE 
+	age < 25;
+    
+SELECT 
+	*
+FROM
+	customers
+WHERE 
+	salary BETWEEN 2000 AND 8000;
+    
+SELECT
+	*
+FROM
+	customers
+ORDER BY salary ASC;
+
+SELECT
+	*
+FROM
+	customers
+ORDER BY age DESC;
+
+SELECT
+	*
+FROM
+	customers
+ORDER BY salary DESC
+LIMIT 3;
+
+SELECT  DISTINCT city
+FROM customers;
+
+SELECT
+	*
+FROM
+	customers
+WHERE customer_name LIKE 'K%';
+
+SELECT 
+	*
+FROM
+	customers
+WHERE customer_name LIKE '%h';
+
+SELECT 
+	*
+FROM
+	customers
+WHERE customer_name LIKE '%a%';
+
+SELECT 
+	*
+FROM
+	customers
+WHERE city IN ('Delhi', 'Mumbai');
+
+--------------------------------------------------
+
+SELECT 
+	COUNT(*)
+FROM
+	customers;
+    
+SELECT
+	AVG(salary)
+FROM
+	customers;
+    
+SELECT
+	MAX(salary)
+FROM
+	customers;
+    
+SELECT
+	MIN(salary)
+FROM 
+	customers;
+    
+SELECT 
+	SUM(salary)
+FROM
+	customers;
+    
+SELECT
+	AVG(age)
+FROM
+	customers;
+    
+SELECT
+	city, COUNT(*)
+FROM
+	customers
+GROUP BY city;
+
+SELECT
+	city, SUM(salary) AS total_salary
+FROM
+	customers
+GROUP BY city;
+
+SELECT
+	city, COUNT(*) AS customer_count
+FROM 
+	customers
+GROUP BY city
+HAVING COUNT(*) > 1;
+
+SELECT
+	MAX(salary), city
+FROM
+	customers
+GROUP BY city;
+
+SELECT
+	MIN(salary), city
+FROM
+	customers
+GROUP BY city;
+
+SELECT
+	COUNT(*)
+FROM 
+	customers
+WHERE salary > 5000;
+
+SELECT
+	COUNT(*)
+FROM
+	customers
+WHERE age < 25;
+
+SELECT
+	SUM(salary), city
+FROM
+	customers
+GROUP BY city
+HAVING city = 'Ahmedabad';
+
+-----------------------------------------------
+
+SELECT 
+	UPPER(customer_name)
+FROM
+	customers;
+    
+SELECT 
+	LOWER(customer_name)
+FROM
+	customers;
+    
+SELECT
+	LENGTH(customer_name)
+FROM
+	customers;
+	
+SELECT
+	customer_name, LEFT(customer_name, 3) AS FirstThree
+FROM
+	customers;
+
+SELECT
+	customer_name, REPLACE(customer_name, 'a','@')
+FROM
+	customers;
+    
+SELECT
+	customer_name, city, CONCAT(customer_name, city)
+FROM
+	customers;
+    
+SELECT
+	customer_name, LEFT(customer_name,1)
+FROM
+	customers;
+
+SELECT
+	customer_name, REVERSE(customer_name) AS reverse_customer_name
+FROM
+	customers;
+    
+SELECT
+	customer_name, TRIM(customer_name) AS Trim_name
+FROM
+	customers;
+    
+SELECT
+	customer_name
+FROM
+	customers
+ORDER BY customer_name;
+
+----------------------------------------------
+
+SELECT
+	*,
+	CASE
+	WHEN salary < 3000 THEN 'LOW'
+    WHEN salary BETWEEN 3000 AND 7000 THEN 'MEDIUM'
+    WHEN salary > 7000 THEN 'HIGH'
+END as Salary_Categories
+FROM
+	customers;
+    
+SELECT
+    *,
+    CASE
+        WHEN age < 25 THEN 'Young'
+        WHEN age BETWEEN 25 AND 30 THEN 'Adult'
+        ELSE 'Senior'
+    END AS Age_Category
+FROM customers;
+
+SELECT
+    *,
+    CASE
+        WHEN salary > 7000 THEN 'Rich'
+        ELSE 'Average'
+    END AS Salary_Status
+FROM customers;
+
+SELECT
+    *,
+    CASE
+        WHEN city IN ('Delhi', 'Mumbai', 'Pune') THEN 'Metro'
+        ELSE 'Non-Metro'
+    END AS City_Category
+FROM customers;
+
+SELECT
+   *,
+    CASE
+        WHEN salary > 6000 THEN 'Eligible'
+        ELSE 'Not Eligible'
+    END AS Premium_Membership
+FROM customers;
