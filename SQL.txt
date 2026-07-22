@@ -511,3 +511,281 @@ SELECT
         ELSE 'Not Eligible'
     END AS Premium_Membership
 FROM customers;
+
+-- 22-07-2026
+
+SHOW DATABASES; 
+
+USE company_db;
+
+SHOW TABLES;
+
+USE newdb;
+
+SHOW TABLES;
+
+USE sql_practice;
+
+SHOW TABLES;
+
+----------------------------------------------------------------
+
+SELECT 
+	*
+FROM 
+	orders;
+    
+SELECT 
+	*
+FROM
+	orders
+WHERE 
+	status = 'PAID';
+    
+SELECT
+	*
+FROM
+	orders
+WHERE	
+	status = 'PENDING';
+    
+SELECT 
+	*
+FROM
+	orders
+WHERE
+	status = 'CANCELLED';
+    
+SELECT
+	SUM(amount)
+FROM
+	orders;
+    
+SELECT
+	AVG(amount)
+FROM
+	orders;
+    
+SELECT
+	MAX(amount)
+FROM
+	orders;
+    
+SELECT
+	MIN(amount)
+FROM
+	orders;
+    
+SELECT
+	COUNT(*)
+FROM
+	orders;
+    
+SELECT
+	COUNT(*)
+FROM
+	orders
+WHERE 
+	status = 'PAID';
+    
+SELECT
+	SUM(amount) AS paid_Amount
+FROM
+	orders
+WHERE
+	status = 'PAID';
+    
+SELECT
+	SUM(amount) AS pending_Amount
+FROM
+	orders
+WHERE
+	status = 'PENDING';
+    
+SELECT
+	*
+FROM
+	orders
+ORDER BY amount;
+
+SELECT
+	*
+FROM
+	orders
+ORDER BY order_date DESC
+LIMIT 1;
+
+SELECT 
+	*
+FROM 
+	orders
+ORDER BY 
+	order_date ASC
+LIMIT 1;
+
+-- Joins Practice
+
+SELECT
+	c.customer_name, o.*
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON c.customer_id = o.customer_id;
+
+SELECT
+	c.customer_name, c.city, o.status
+FROM
+	customers AS c
+LEFT JOIN
+	orders AS o
+ON	c.customer_id = o.customer_id;
+
+SELECT
+	c.customer_name, c.city, o.status
+FROM
+	customers AS c
+INNER JOIN
+	orders AS o
+ON	c.customer_id = o.customer_id;
+
+SELECT
+	*
+FROM
+	customers c
+LEFT JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id
+WHERE
+	o.customer_id IS NULL;
+
+SELECT
+	*
+FROM
+	orders o
+LEFT JOIN
+	customers c
+ON
+	o.customer_id = c.customer_id
+WHERE c.customer_id IS NULL;
+
+SELECT
+    c.customer_name,
+    SUM(o.amount) AS Total_Order_Amount
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id
+GROUP BY c.customer_name;
+
+SELECT
+	c.customer_id,
+    c.customer_name,
+    SUM(o.amount) AS total_purchase
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id
+GROUP BY customer_name, customer_id
+ORDER BY total_purchase DESC
+LIMIT 1;
+
+SELECT
+	c.customer_name,
+    c.customer_id,
+    COUNT(o.order_id) AS total_orders
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id
+GROUP BY customer_id, customer_name;
+
+SELECT 
+	c.customer_name, 
+    c.customer_id,
+    COUNT(o.order_id) AS total_orders
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id
+GROUP BY
+	c.customer_name, c.customer_id
+HAVING COUNT(o.order_id) > 1;
+	
+SELECT 
+	c.customer_name,
+    c.salary,
+    o.amount
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id;
+    
+SELECT
+	c.customer_name,
+    c.customer_id, 
+    SUM(o.amount) AS TOTAL_PURCHASE
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON
+	c.customer_id = o.customer_id
+GROUP BY customer_id, customer_name;
+
+SELECT
+	c.customer_id,
+    c.customer_name,
+    AVG(o.amount)
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON
+	c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.customer_name;
+
+SELECT
+	c.customer_id,
+    c.customer_name,
+    SUM(o.amount) AS total_purchase
+FROM
+	customers c
+INNER JOIN
+	orders o
+ON 
+	c.customer_id = o.customer_id
+GROUP BY 
+	c.customer_id, c.customer_name
+HAVING 
+	SUM(o.amount) > 4000;
+    
+SELECT
+    c.customer_id,
+    c.customer_name,
+    COUNT(o.order_id) AS total_orders
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.customer_name
+HAVING COUNT(o.order_id) >= 2;
+
+SELECT
+    c.city,
+    SUM(o.amount) AS total_purchase
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id
+GROUP BY c.city
+HAVING SUM(o.amount) > 5000;
